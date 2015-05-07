@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+open(CMDOUT, "-|", "/usr/bin/vm_stat", @ARGV) or die "Cannot open vm_stat";
+
+while(<CMDOUT>) {
+  if (/Mach Virtual Memory Statistics/) {
+    print "Mach Virtual Memory Statistics: (Unit KB)\n";
+  }
+  else {
+    @num = m/([0-9]+)/;
+    $new_num = $num[0] * 4;
+    s/[0-9]+/$new_num/;
+    print;
+  }
+}
