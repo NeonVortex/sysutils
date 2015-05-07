@@ -1,0 +1,13 @@
+#!/bin/sh
+
+vm_stat "$*" | perl -ne '
+if (/Mach Virtual Memory Statistics/) {
+  print "Mach Virtual Memory Statistics: (unit KB)\n";
+}
+else {
+  @num = m/([0-9]+)/;
+  $new_num = $num[0] * 4;
+  s/[0-9]+/$new_num/;
+  print;
+}
+'
