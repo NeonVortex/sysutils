@@ -1,6 +1,7 @@
 #!/bin/sh
 
 vm_stat "$@" | perl -ne '
+
 if (/Mach Virtual Memory Statistics/) {
   print "Mach Virtual Memory Statistics: (Unit KB)\n";
 }
