@@ -7,9 +7,6 @@ while(<CMDOUT>) {
     print "Mach Virtual Memory Statistics: (Unit KB)\n";
   }
   else {
-    @num = m/([0-9]+)/;
-    $new_num = $num[0] * 4;
-    s/[0-9]+/$new_num/;
-    print;
+    print s/([0-9]+)/$1*4/ree;
   }
 }
