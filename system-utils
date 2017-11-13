@@ -1,0 +1,47 @@
+#!/bin/bash
+
+while [ 1 ]; do
+
+    printf "\033c"
+
+    echo "System Tools
+1. Reset DNS Cache
+2. Remove User Cache
+3. Guide of Resetting NVRAM
+4. Caffeinate/Decaf
+5. Remove WIFI settings
+0. Exit"
+
+    read c
+
+    if [[ $c == "1" ]]; then
+        sudo killall -HUP mDNSResponder
+        echo "Done"
+        read
+    elif [[ $c == "2" ]]; then
+        sudo rm -rf ~/Library/Caches/*
+        echo "Done"
+        read
+    elif [[ $c == "3" ]]; then
+        echo "CMD+OPTION+R+P+POWER"
+        read
+    elif [[ $c == "4" ]]; then
+        pid=$(ps -ef | awk '$8=="caffeinate" {print $2}')
+        if [[ -z $pid ]]; then
+            nohup caffeinate 2>&1 > /dev/null &
+            echo "Caffeinated"
+        else
+            kill -9 $pid
+            echo "Decaffed"
+        fi
+        read
+    elif [[ $c == "5" ]]; then
+        cd /Library/Preferences/SystemConfiguration/
+        sudo rm -fr com.apple.airport.preferences.plist com.apple.wifi.message-tracer.plist NetworkInterfaces.plist preferences.plist com.apple.network.identification.plist
+        echo "Done"
+        read
+    elif [[ $c == "0" ]]; then
+        exit
+    fi
+
+done
