@@ -1,0 +1,21 @@
+#!/bin/bash
+
+files=()
+for arg in $@; do
+    if [[ ! "$arg" == -* ]]; then
+        files+=($arg)
+    fi
+done
+
+if [[ ${#files[@]} == 0 ]]; then
+    (>&2 echo "No files specified")
+fi
+for arg in ${files[@]}; do
+    echo $arg
+    if [[ -f $arg ]]; then
+        fullpath=$(cd $(dirname "$arg") && pwd -P)/$(basename "$arg")
+        osascript -e 'tell app "Finder" to move the POSIX file "'$fullpath'" to trash'
+    else
+        $(>&2 echo "File does not exists: "$arg)
+    fi
+done
