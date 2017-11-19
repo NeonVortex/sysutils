@@ -7,6 +7,8 @@ for arg in "$@"; do
         files+=("$arg")
     elif [[ "$arg" == -v ]]; then
         verbose=1
+    elif [[ "$arg" == -vv ]]; then
+        verbose=2
     fi
 done
 
@@ -16,8 +18,9 @@ fi
 for arg in "${files[@]}"; do
     if [[ -f "$arg" ]]; then
         fullpath="$(cd $(dirname "$arg") && pwd -P)/$(basename "$arg")"
-        [[ $verbose == "1" ]] && echo "Removing file: $fullpath"
-        osascript -e 'tell app "Finder" to move the POSIX file "'"$fullpath"'" to trash'
+        [[ $verbose -gt 0 ]] && echo -e "Removing file:\t$fullpath"
+        output=$(osascript -e 'tell app "Finder" to move the POSIX file "'"$fullpath"'" to trash')
+        [[ $verbose -gt 1 ]] && echo "$output"
     else
         $(>&2 echo "File does not exists: ""$arg")
     fi
