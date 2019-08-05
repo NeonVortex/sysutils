@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" -o -z "$2" ]; then
+	echo 'Usage: [ImageMagick options] output input1 input2 ...'
+	exit
+fi
+
+params=( "${@:1}" )
+
+convert ${params[@]:1} -page letter -units pixelsperinch -density 72 "${params[0]}" 
