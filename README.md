@@ -1,6 +1,10 @@
 Some programs/scripts for OS X
 
-vmstat
-- It uses built-in BSD command vm\_stat with more friendly output
+rename
+- Batch rename files by regular expression
 
+gs-pdf
+- pdf editing using ghost script
 
+convert-pdf
+- pdf creation from images using imagemagick
